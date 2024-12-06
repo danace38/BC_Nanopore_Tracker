@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Nav from "./Nav";
+import './Query.css';
 
-const DatabaseQuery = () => {
+const Query = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [keyword, setKeyword] = useState('');
   const [tableName, setTableName] = useState('experiment');
@@ -9,8 +10,7 @@ const DatabaseQuery = () => {
   const [error, setError] = useState(null);
 
   const tables = [
-    'experiment', 'run', 'barcode', 'run_hardware', 'experiment_hardware',
-    'library_prep', 'note', 'operator', 'participants', 'sample', 'sequencing_unit'
+    'experiment', 'run', 'barcode', 'computer', 'library_prep', 'minion', 'operator', 'participants', 'sample', 'sequencing_unit'
   ];
 
   useEffect(() => {
@@ -59,14 +59,24 @@ const DatabaseQuery = () => {
     fetchData();
   };
 
+  const handleEdit = (row) => {
+    // Implement edit functionality here
+    console.log('Edit row:', row);
+  };
+
+  const handleDelete = (row) => {
+    // Implement delete functionality here
+    console.log('Delete row:', row);
+  };
+
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', margin: '20px' }}>
-       <Nav />
-      <h1>Database Query with Search</h1>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+    <div className="container">
+      <Nav />
+      <h1 className="header">Database Query with Search</h1>
+      <div className="controls">
         <div>
-          <label htmlFor="tableSelect">Select Table:</label>
-          <select id="tableSelect" value={tableName} onChange={handleTableChange}>
+          <label htmlFor="tableSelect">Select Table: </label>
+          <select id="tableSelect" value={tableName} onChange={handleTableChange} className="select">
             {tables.map(table => (
               <option key={table} value={table}>{table}</option>
             ))}
@@ -74,49 +84,53 @@ const DatabaseQuery = () => {
         </div>
         <div>
           <input 
-            type="text" 
-            value={keyword} 
+            type="text"
+            value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             placeholder="Enter keyword to search"
+            className="input"
           />
-          <button onClick={handleSearch}>Search</button>
+          <button onClick={handleSearch} className="button">Search</button>
         </div>
       </div>
 
-      <div style={{ marginTop: '10px' }}>
-        <button onClick={handlePrevPage}>Previous Page</button>
-        <span>Page: {currentPage}</span>
-        <button onClick={handleNextPage}>Next Page</button>
-      </div>
-
       {error ? (
-        <p style={{ color: 'red' }}>{error}</p>
+        <p className="error">{error}</p>
       ) : (
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
-          <thead>
-            <tr>
-              {data.length > 0 && Object.keys(data[0]).map(key => (
-                <th key={key} style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left', backgroundColor: '#f4f4f4' }}>
-                  {key}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => (
-              <tr key={index}>
-                {Object.values(row).map((value, idx) => (
-                  <td key={idx} style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>
-                    {value}
-                  </td>
+        <div className="table-container">
+          <table className="query-table">
+            <thead>
+              <tr>
+                {data.length > 0 && Object.keys(data[0]).map(key => (
+                  <th key={key} className="query-th">{key}</th>
                 ))}
+                {/* No Actions column */}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data.map((row, index) => (
+                <tr key={index}>
+                  {Object.values(row).map((value, idx) => (
+                    <td key={idx} className="query-td">{value}</td>
+                  ))}
+                  {/* Edit and Delete buttons directly in the row */}
+                  <td className="query-td">
+                    <button onClick={() => handleEdit(row)} className="button edit-button">Edit</button>
+                    <button onClick={() => handleDelete(row)} className="button delete-button">Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
+      <div className="pagination">
+        <button onClick={handlePrevPage} className="button" disabled={currentPage === 1}>Previous Page</button>
+        <span>Page: {currentPage}</span>
+        <button onClick={handleNextPage} className="button">Next Page</button>
+      </div>
     </div>
   );
 };
 
-export default DatabaseQuery;
+export default Query;

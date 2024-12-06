@@ -23,9 +23,6 @@ function NavBar() {
           <button onClick={() => handleNavigation('/query')} className="nav-link">
             Query Test
           </button>
-          <button onClick={() => handleNavigation('/upload')} className="nav-link">
-            Upload
-          </button>
           <button onClick={() => handleNavigation('/logout')} className="nav-link">
             Logout
           </button>
