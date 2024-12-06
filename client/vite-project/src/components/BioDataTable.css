@@ -1,0 +1,42 @@
+.bio-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  .bio-table th, .bio-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .bio-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .bio-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .status-badge {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+  }
+  
+  .status-badge.completed {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-badge.processing {
+    background-color: #cce5ff;
+    color: #004085;
+  }
+  
+  .status-badge.failed {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  

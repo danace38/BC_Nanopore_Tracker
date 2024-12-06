@@ -1,0 +1,62 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+.nav-header {
+  width: 100%;
+  background-color: #27272a;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.nav-brand {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: rgb(190, 102, 102);
+  margin-left: -1500;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  margin-right: -300px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #d4d4d8;
+}
+
+.login-image {
+  width: 50px;            /* Allow proportional scaling */
+  height: 40px;           /* Set a fixed height for the navbar */
+  max-height: 40px;       /* Ensure it doesn't exceed navbar height */
+  object-fit: contain;    /* Maintain aspect ratio */
+  margin: 0;              /* Remove default margins */
+  padding: 5px;           /* Add some padding */
+  vertical-align: middle; /* Align vertically in navbar */
+  float: left;            /* Align to the left */
+  margin-left: -350px;
+}
+
