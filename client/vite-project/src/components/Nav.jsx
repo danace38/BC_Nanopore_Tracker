@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Nav.css";
-import logo from '../assets/bc_round_Logo.png'; 
+import logo from '../assets/bc_round_Logo.png';
 
 function NavBar() {
   const navigate = useNavigate();
@@ -13,8 +13,9 @@ function NavBar() {
   return (
     <header className="nav-header">
       <div className="nav-container">
-        <Link to="/" className="nav-brand">
-          BC Bio Lab Database
+        <Link to="/home" className="nav-brand">
+          <img src={logo} alt="BC Logo" className="nav-logo" />
+          <span>BC Nanopore Tracker </span>
         </Link>
         <nav className="nav-links">
           <button onClick={() => handleNavigation('/home')} className="nav-link">
