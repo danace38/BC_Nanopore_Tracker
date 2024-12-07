@@ -15,7 +15,7 @@ const Query = () => {
 
     const tables = [
         'experiment', 'run', 'barcode', 'computer', 'library_prep', 
-        'minion', 'operator', 'participants', 'sample', 'sequencing_unit'
+        'minion', 'operator', 'participant', 'sample', 'sequencing_unit'
     ];
 
     useEffect(() => {
@@ -92,13 +92,17 @@ const Query = () => {
         }
     };
 
+    // Adjusted handleDelete function
     const handleDelete = async (row) => {
         if (window.confirm('Are you sure you want to delete this row?')) {
             setIsLoading(true);
             try {
-                const response = await fetch(`http://localhost:8000/api/data/${tableName}/${row.id}`, { method: 'DELETE' });
+                // Adjusted URL for DELETE request
+                const url = `http://localhost:8000/api/delete/${tableName}/${row.id}`;
+                console.log(`Sending DELETE request to: ${url}`);
+                const response = await fetch(url, { method: 'DELETE' });
                 if (!response.ok) throw new Error('Failed to delete data');
-                fetchData();
+                fetchData(); // Refresh data after deletion
             } catch (error) {
                 setError(`Error: ${error.message}`);
             } finally {
@@ -162,6 +166,7 @@ const Query = () => {
                                         ))}
                                         <td className="query-td">
                                             <button onClick={() => handleEdit(row)} className="edit-button">Edit</button>
+                                            {/* Pass the row to Delete component */}
                                             <Delete onDelete={() => handleDelete(row)} />
                                         </td>
                                     </tr>
