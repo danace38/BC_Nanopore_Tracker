@@ -10,11 +10,13 @@ const Query = () => {
     const [tableName, setTableName] = useState('experiment');
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
     const [editingRow, setEditingRow] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [recordId, setRecordId] = useState(''); // For manual delete form
 
     const tables = [
-        'experiment', 'run', 'barcode', 'computer', 'library_prep', 
+        'experiment', 'run', 'barcode', 'computer', 'library_prep',
         'minion', 'operator', 'participant', 'sample', 'sequencing_unit'
     ];
 
@@ -25,8 +27,8 @@ const Query = () => {
     const fetchData = async () => {
         setIsLoading(true);
         setError(null);
+        setSuccessMessage(null); // Reset success message on new fetch
         try {
-            await new Promise(resolve => setTimeout(resolve, 1000));
             let url = `http://localhost:8000/api/data/${tableName}?page=${currentPage}&limit=20`;
             if (keyword) {
                 url += `&search=${encodeURIComponent(keyword)}`;
@@ -37,7 +39,7 @@ const Query = () => {
             if (response.ok) {
                 setData(result);
             } else {
-                throw new Error(`Error: ${JSON.stringify(result)}`);
+                throw new Error(result.message || 'Error fetching data');
             }
         } catch (error) {
             setError(`Failed to fetch data: ${error.message}`);
@@ -80,8 +82,9 @@ const Query = () => {
                 body: JSON.stringify(editedRow),
             });
             if (response.ok) {
+                setData(prevData => prevData.map(item => item.id === editedRow.id ? editedRow : item));
                 setEditingRow(null);
-                fetchData();
+                setSuccessMessage('Row updated successfully!');
             } else {
                 throw new Error('Failed to update data');
             }
@@ -92,17 +95,25 @@ const Query = () => {
         }
     };
 
-    // Adjusted handleDelete function
     const handleDelete = async (row) => {
         if (window.confirm('Are you sure you want to delete this row?')) {
             setIsLoading(true);
             try {
-                // Adjusted URL for DELETE request
-                const url = `http://localhost:8000/api/delete/${tableName}/${row.id}`;
-                console.log(`Sending DELETE request to: ${url}`);
+                const url = `http://localhost:8000/api/data/delete/${tableName}/${row.id}`;
                 const response = await fetch(url, { method: 'DELETE' });
-                if (!response.ok) throw new Error('Failed to delete data');
-                fetchData(); // Refresh data after deletion
+    
+                // Check if the response is JSON
+                if (response.ok) {
+                    const result = await response.json();
+                    setData(prevData => prevData.filter(item => item.id !== row.id));
+                    setSuccessMessage('Row deleted successfully!');
+                } else {
+                    // Log the response text for debugging purposes
+                    const text = await response.text();
+                    console.error('Delete failed with status:', response.status);
+                    console.error('Response text:', text);
+                    throw new Error('Failed to delete row');
+                }
             } catch (error) {
                 setError(`Error: ${error.message}`);
             } finally {
@@ -110,11 +121,55 @@ const Query = () => {
             }
         }
     };
+    
+
+    const handleManualDelete = async (e) => {
+        e.preventDefault();
+
+        // Get form values
+        const tableName = document.getElementById('tableName').value;
+        const recordId = document.getElementById('recordId').value;
+
+        // Reset result message
+        const resultDiv = document.getElementById('result');
+        resultDiv.textContent = '';
+
+        if (!tableName || !recordId) {
+            resultDiv.textContent = "Please provide both table name and record ID.";
+            resultDiv.style.color = 'red';
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            // Send DELETE request
+            const response = await fetch(`http://localhost:8000/api/data/delete/${tableName}/${recordId}`, {
+                method: 'DELETE',
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                resultDiv.textContent = result.message || 'Record deleted successfully';
+                resultDiv.style.color = 'green';
+                fetchData(); // Refresh data after deletion
+            } else {
+                resultDiv.textContent = result.message || 'Failed to delete record';
+                resultDiv.style.color = 'red';
+            }
+        } catch (error) {
+            resultDiv.textContent = `Error: ${error.message}`;
+            resultDiv.style.color = 'red';
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <div className="container">
             <Nav />
             <h1 className="header">Database Query with Search</h1>
+            
             <div className="controls">
                 <div>
                     <label htmlFor="tableSelect">Select Table:</label>
@@ -124,6 +179,7 @@ const Query = () => {
                         ))}
                     </select>
                 </div>
+                
                 <div>
                     <input 
                         type="text"
@@ -141,42 +197,56 @@ const Query = () => {
             ) : error ? (
                 <p className="error">{error}</p>
             ) : (
-                <div className="table-container">
-                    <table className="query-table">
-                        <thead>
-                            <tr>
-                                {data.length > 0 && Object.keys(data[0]).map(key => (
-                                    <th key={key} className="query-th">{key}</th>
+                <>
+                    {successMessage && <p className="success">{successMessage}</p>}
+                    <div className="table-container">
+                        <table className="query-table">
+                            <thead>
+                                <tr>
+                                    {data.length > 0 && Object.keys(data[0]).map(key => (
+                                        <th key={key} className="query-th">{key}</th>
+                                    ))}
+                                    <th className="query-th">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {data.map((row, index) => (
+                                    editingRow === row ? (
+                                        <Edit
+                                            key={index}
+                                            row={row}
+                                            onSave={handleSave}
+                                            onCancel={() => setEditingRow(null)}
+                                        />
+                                    ) : (
+                                        <tr key={index}>
+                                            {Object.values(row).map((value, idx) => (
+                                                <td key={idx} className="query-td">{value}</td>
+                                            ))}
+                                            <td className="query-td">
+                                                <button 
+                                                    onClick={() => handleEdit(row)} 
+                                                    className="edit-button"
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(row)} 
+                                                    className="delete-button"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )
                                 ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((row, index) => (
-                                editingRow === row ? (
-                                    <Edit
-                                        key={index}
-                                        row={row}
-                                        onSave={handleSave}
-                                        onCancel={() => setEditingRow(null)}
-                                    />
-                                ) : (
-                                    <tr key={index}>
-                                        {Object.values(row).map((value, idx) => (
-                                            <td key={idx} className="query-td">{value}</td>
-                                        ))}
-                                        <td className="query-td">
-                                            <button onClick={() => handleEdit(row)} className="edit-button">Edit</button>
-                                            {/* Pass the row to Delete component */}
-                                            <Delete onDelete={() => handleDelete(row)} />
-                                        </td>
-                                    </tr>
-                                )
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </>
             )}
-            
+
+
             <div className="pagination">
                 <button onClick={handlePrevPage} className="pagination-button" disabled={currentPage === 1}>Previous Page</button>
                 <span>Page: {currentPage}</span>

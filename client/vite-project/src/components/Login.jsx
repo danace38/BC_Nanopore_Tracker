@@ -36,7 +36,7 @@ function Login() {
   return (
     <div className="login-container">
       <img src={logo} alt="Login Logo" className="login-image" />
-      <h2>BC Biology Lab Database</h2>
+      <h2>BC Nanopore Tracker</h2>
       <p>For authorized staff ONLY</p>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleLogin}>
