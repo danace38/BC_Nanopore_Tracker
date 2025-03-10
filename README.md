@@ -166,3 +166,6 @@ Developers:
 Supervisors:
  * Ilana Cohen - `icohen1@gradcenter.cuny.edu`
  * Professor Theodore Muth - `tmuth@brooklyn.cuny.edu`
+
+ # License
+ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
