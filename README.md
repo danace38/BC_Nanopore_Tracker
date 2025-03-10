@@ -44,6 +44,62 @@ Back-End:
 
 For detailed back-end documentation, visit [my teammate's repo](https://github.com/FrankRenN/BC_Nanopore_Tracker/tree/main)
 
+
+# Project Structure
+
+* Front-End
+```
+src
+│   App.css
+│   App.jsx
+│   main.jsx
+│
+├───assets
+│       BC_Logo.png
+│       bc_round_logo.png
+│
+└───components
+        AddComputer.css
+        AddComputer.jsx
+        AddExperiment.css
+        AddExperiment.jsx
+        AddMinion.css
+        AddMinion.jsx
+        Delete.css
+        Delete.jsx
+        Edit.css
+        Edit.jsx
+        Experiments.css
+        Experiments.jsx
+        Home.css
+        Home.jsx
+        Login.css
+        Login.jsx
+        Nav.css
+        Nav.jsx
+        Query.css
+        Query.jsx
+        RunList.jsx
+```
+
+* Back-End
+
+```
+project-root
+├── controllers
+│   └── dbController.js   # Handles database operations
+├── middlewares
+│   └── validateTable.js  # Middleware to validate table names
+├── models
+│   ├── db.js             # Database connection setup
+│   └── tableModel.js     # Database query models
+├── routes
+│   └── dataRoutes.js     # API route definitions
+├── .env                  # Environment variables
+├── app.js                # Application entry point
+└── package.json          # Project dependencies and scripts
+```
+
 # Instructions 
 
 #### Prerequisites
