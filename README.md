@@ -76,8 +76,12 @@ npm install
 npm run dev
 ```
 
-5. Open project in the browser. Vite will display a link which you can click on.
+5. Open project in the browser. Vite will display a link which you can click on. For example 'http://localhost:5173'
 
-```
-http://localhost:5173/
-```
+6. Start the server in a separate terminal
+
+  - Move to the server directory 'cd server'
+  - Start the server:
+    ```
+    node app.js
+    ```
