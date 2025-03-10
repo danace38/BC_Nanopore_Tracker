@@ -19,3 +19,11 @@ Back-End:
 * Redis
 
 For detailed back-end documentation, visit [my teammate's repo](https://github.com/FrankRenN/BC_Nanopore_Tracker/tree/main)
+
+# Instructions 
+
+#### To Use This Application:
+1. Clone the project
+```
+git clone https://github.com/danace38/BC_Nanopore_Tracker.git
+```
