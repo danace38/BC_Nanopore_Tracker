@@ -60,3 +60,24 @@ Ensure you have the following installed on your local machine:
 ```
 git clone https://github.com/danace38/BC_Nanopore_Tracker.git
 ```
+
+2. Move into the project's client directory 
+```
+cd client\vite-project
+```
+
+3. Install dependencies 
+```
+npm install 
+```
+
+4. Run the application in developer mode 
+```
+npm run dev
+```
+
+5. Open project in the browser. Vite will display a link which you can click on.
+
+```
+http://localhost:5173/
+```
