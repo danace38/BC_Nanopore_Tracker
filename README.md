@@ -134,7 +134,21 @@ npm run dev
 
 5. Open project in the browser. Vite will display a link which you can click on. For example `http://localhost:5173`
 
-6. Start the server in a separate terminal
+6. Configure the environment variables in a `.env` file
+    
+    ```
+    DB_HOST=localhost
+    DB_USER=root
+    DB_PASSWORD=your_password
+    DB_NAME=labdatabase
+    PORT=8000
+    ```
+    Note: 
+    - Ensure you have MySQL database set up with the necessary tables and data. 
+    - Ensure that the database credentials in your application match those in the `.env` file or the database connection settings.
+    - Backup your database before making changes to prevent data loss.
+
+7. Start the server in a separate terminal
 
   - Move to the server directory `cd server`
   - Start the server:
