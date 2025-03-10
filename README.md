@@ -14,7 +14,7 @@ The laboratory's data management practices, primarily relying on Google Sheets a
   - Update: Modify existing records.
   - Delete: Remove records by ID.
 
-# Screenshot walkthrough 
+# Screenshot Walkthrough 
 
 #### Login page
 ![LoginPage_BCNanopore](https://github.com/user-attachments/assets/4b2e0003-7c93-43b2-8526-07072462ed16)
@@ -155,3 +155,12 @@ npm run dev
     ```
     node app.js
     ```
+# Contributors
+
+Developers:
+ * Danil Ermolin 
+ * Feng Ren - [GitHub](https://github.com/FrankRenN) 
+
+Supervisors:
+ * Ilana Cohen - `icohen1@gradcenter.cuny.edu`
+ * Prof. Theodore Muth - `tmuth@brooklyn.cuny.edu`
