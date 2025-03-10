@@ -17,6 +17,7 @@ The laboratory's data management practices, primarily relying on Google Sheets a
 # Screenshot walkthrough 
 
 #### Login page
+![LoginPage_BCNanopore](https://github.com/user-attachments/assets/4b2e0003-7c93-43b2-8526-07072462ed16)
 
 
 
