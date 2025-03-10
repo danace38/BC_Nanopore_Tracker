@@ -4,6 +4,8 @@ The BC Nanopore Tracker web application was developed as part of an academic ini
 
 The laboratory's data management practices, primarily relying on Google Sheets and third-party services, present limitations for secure and efficient handling of critical research information. The goal of this project is to deliver a scalable and efficient web application for managing laboratory data, including experiments, runs, devices, and participants. 
 
+- [View The Project Presentation Slides](https://docs.google.com/presentation/d/16UlMPMID9vs3ka5yUXBEyR-rSHgQ_Cj636L2Zau3YWo/edit#slide=id.g31db5ec2a3b_1_169)
+
 # Features
 * Registered users can login to the website using their email and password.
 * NavBar which provides seamless navigation throughout the website.
