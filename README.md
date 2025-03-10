@@ -158,9 +158,9 @@ npm run dev
 # Contributors
 
 Developers:
- * Danil Ermolin 
- * Feng Ren - [GitHub](https://github.com/FrankRenN) 
+ * Danil Ermolin - [GitHub Profile](https://github.com/danace38)
+ * Feng Ren - [GitHub Profile](https://github.com/FrankRenN) 
 
 Supervisors:
  * Ilana Cohen - `icohen1@gradcenter.cuny.edu`
- * Prof. Theodore Muth - `tmuth@brooklyn.cuny.edu`
+ * Professor Theodore Muth - `tmuth@brooklyn.cuny.edu`
