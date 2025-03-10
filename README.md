@@ -14,6 +14,10 @@ The laboratory's data management practices, primarily relying on Google Sheets a
   - Update: Modify existing records.
   - Delete: Remove records by ID.
 
+# Screenshot walkthrough 
+
+#### Login page
+
 
 
 # Tech Stack
